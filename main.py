@@ -462,7 +462,7 @@ def girar90():
 while run == True:
     relogio.reseta()
 
-    print(todos_linha())
+    # print(todos_linha())
 
     # if e_gap() == True:
     #     gap()
@@ -474,25 +474,25 @@ while run == True:
     ## quando ele chama o girar graus dentro do grie até achar ele da um erro estranho, tem q ver dps
     ## e acontece coisas parecidas no gap
 
-    # erroo = erro()
-    # p = erroo * kp 
-    # d = erroo - erro_anterior * kd
+    erroo = erro()
+    p = erroo * kp 
+    d = erroo - erro_anterior * kd
 
-    # # print(erro(), p, d, "   ", todos_linha())
+    print(erro(), p, d, "   ", todos_linha())
     
-    # vb = 60
-    # valor = p + d
+    vb = 60
+    valor = p + d
 
-    # motor_a_esquerdo.dc(vb + valor)
-    # motor_b_direito.dc(vb - valor)
+    motor_a_esquerdo.dc(vb + valor)
+    motor_b_direito.dc(vb - valor)
 
-    # erro_anterior = erroo
+    erro_anterior = erroo
 
     #     # parar(run)
 
-    # while relogio.tempo() < 25:
+    while relogio.tempo() < 25:
 
-    #     continue
+        continue
 
 
 #COMENTA ESSA MERDA, tudo oque você faz tem que ser entendivel
