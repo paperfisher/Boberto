@@ -10,7 +10,7 @@ from pybricks.tools import wait
 from cronometro import Cronometro
 
 import time
-
+#TESTE
 ev3 = EV3Brick()
 
 sensorLinha = LUMPDevice(Port.S3)
