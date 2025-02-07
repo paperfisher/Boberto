@@ -111,7 +111,11 @@ def sensoresEs():
 
 def tudobranco():
     if CorEsquerdaVendra() > branco and CorEsquerdaEXvendra() > branco and CorDireitaVendra() > branco and CorDireitaEXvendra() > branco:
-        return True
+
+        wait(100)
+
+        if CorEsquerdaVendra() > branco and CorEsquerdaEXvendra() > branco and CorDireitaVendra() > branco and CorDireitaEXvendra() > branco:
+            return True
     else:
         return False
 
@@ -143,29 +147,6 @@ def erro():
     erro = (CorEsquerdaEXvendra() + CorEsquerdaVendra()) - (CorDireitaVendra() + CorDireitaEXvendra())
     return erro
 
-
-def pd(): ##não ta sendo utilizado
-    p = erro() * kp 
-    d = erro() - erro_anterior * kd
-    return p + d   
-
-def checar_90():
-
-    if sensoresEs() > branco and sensoresDir() < preto:
-           
-        print("noventa dir")
-        
-        return "dir"
-
-    elif sensoresDir() > branco and sensoresEs() < preto:
-        
-        print("noventa esq")
-        # print(CorEsquerdaEXvendra(), CorEsquerdaVendra(), CorDireitaVendra(), CorDireitaEXvendra())
-        return "esq"
-
-    else:
-        False
-
 def girargraus(graus, direcao):
 
     if direcao == "esq":
@@ -187,234 +168,6 @@ def girargraus(graus, direcao):
 
             motor_a_esquerdo.dc(-70)
             motor_b_direito.dc(70)
-
-def NoventaDir():
-    atual = giro()
-
-    while tudobranco() == True:
-        # print(giro())
-
-        motor_a_esquerdo.dc(50)
-        motor_b_direito.dc(-50)
-
-def NoventaEsq():
-    atual = giro()
-
-    while tudobranco() == True:
-        # print(giro())
-
-        motor_a_esquerdo.dc(-50)
-        motor_b_direito.dc(50)
-
-a = 1
-def e_gap(): #tem que olhar melhor
-
-    global a
-    for i in range(a):
-        pararMotores()
-        bobo.straight(10)
-        a = a + 1
-        if a > 10:
-            bobo.straight(-a * 10)
-            return False
-            break
-        if tudobranco() == False:
-            pass
-        else:
-            return False
-
-def gap(): #tem que olhar melhor
-
-    while tudobranco() == True:
-        pararMotores()
-        bobo.straight(10)
-
-def gira_ate_achar(): #tem que olhar melhor
-
-    if tudobranco() == True:
-
-        #verifica se é gap
-        if e_gap() == True:
-            gap()
-
-        else:
-            girargraus(30, "dir")
-            if tudobranco() == True:
-                girargraus(60, "esq")
-
-                if tudobranco() == True:
-
-                    while tudobranco() == True:
-
-                        girargraus(15, "esq")
-                    
-def noventa_semverde():
-
-    if checar_90() == "dir": 
-
-        ev3.speaker.beep(600,200)
-        print(todos_linha())
-
-        motor_a_esquerdo.dc(50)
-        motor_b_direito.dc(50)
-
-        wait(100)
-
-        if tudobranco() == True:
-            
-            print(CorEsquerdaEXvendra(), CorEsquerdaVendra(), CorDireitaVendra(), CorDireitaEXvendra())
-            pararMotores()  
-            NoventaDir()
-
-            # motor_a_esquerdo
-            #.dc(-50)
-            # motor_b_direito.dc(-50)
-
-            wait(250)
-
-            if tudobranco() == True:
-
-                girargraus(30, "dir")
-                if tudobranco() == True:
-                    girargraus(60, "esq")
-
-                    if tudobranco() == True:
-
-                        while tudobranco() == True:
-
-                            girargraus(15, "dir")
-
-        else:
-            pararMotores()
-            motor_a_esquerdo.dc(-50)
-            motor_b_direito.dc(-50)
-
-            wait(150)
-                    
-            
-    if checar_90() == "esq":
-
-        ev3.speaker.beep(300,100)
-        print(todos_linha())
-
-        motor_a_esquerdo.dc(50)
-        motor_b_direito.dc(50)
-
-        wait(100)
-
-        if tudobranco() == True:
-
-            print(CorEsquerdaEXvendra(), CorEsquerdaVendra(), CorDireitaVendra(), CorDireitaEXvendra())
-            pararMotores()  
-            NoventaEsq()
-
-            # motor_a_esquerdo
-            #.dc(-50)
-            # motor_b_direito.dc(-50)
-
-            wait(250)
-
-            if tudobranco() == True:
-
-                girargraus(30, "dir")
-                if tudobranco() == True:
-                    girargraus(60, "esq")
-
-                    if tudobranco() == True:
-
-                        while tudobranco() == True:
-
-                            girargraus(15, "esq")
-
-        else:
-            pararMotores()
-            motor_a_esquerdo.dc(-50)
-            motor_b_direito.dc(-50)
-
-            wait(150)
-
-def noventaverde():
-
-    graus = 90
-
-    if checarcor(sensordecorEs()) == "verde" and checarcor(sensordecorDir()) != "verde":
-
-        motor_a_esquerdo.dc(50)
-        motor_b_direito.dc(50)
-
-        wait(300)
-
-        pararMotores()
-        gcount = 0
-
-        bobo.straight(100)
-        bobo.stop()
-
-        motor_a_esquerdo.run(720)
-        motor_b_direito.run(-720)
-
-        atual = giro()
-
-        while giro() < (atual + (graus/2)):
-
-            continue
-
-        atual = giro()
-
-        while giro() < (atual - (graus/2)):
-
-            if viupreto() == True:
-
-                break
-
-            continue
-
-        # while gcount < 6 or tudobranco() == False:
-        #     girargraus(15, "esq")
-        #     if tudobranco() == False:
-        #         gcount = 6
-        #     gcount += 1
-            
-        # motor_a_esquerdo.dc(-50)
-        # motor_b_direito.dc(-50)
-
-    elif checarcor(sensordecorDir()) == "verde" and checarcor(sensordecorEs()) != "verde":
-
-        motor_a_esquerdo.dc(50)
-        motor_b_direito.dc(50)
-
-        wait(300)           
-          
-        pararMotores() 
-        gcount = 0
- 
-        bobo.straight(100)
-        bobo.stop()
-
-        motor_a_esquerdo.run(-720)
-        motor_b_direito.run(720)
-
-        atual = giro()
-
-        while giro() > (atual - (graus/2)):
-
-            continue
-        
-        atual = giro()
-
-        while giro() > (atual - (graus/2)):
-
-            if viupreto() == True:
-
-                break
-
-            continue
-
-        wait(400)
-
-    elif checarcor(sensordecorDir()) == "verde" and checarcor(sensordecorEs()) == "verde":
-
-        girargraus(180, "dir")
 
 def parar(run):
 
@@ -445,8 +198,8 @@ relogio = Cronometro("tempo")
 relogio.carrega()
 
 
-kp = 1.5 #1
-kd = 0.8 # 0.5
+kp = 1.65 #1
+kd = 1.3 # 0.5
 erro_anterior = 0
 run = True
 
@@ -470,9 +223,8 @@ while run == True:
     # if e_gap() == True:
     #     gap()
 
-    noventa_semverde()
-    # noventaverde()
-    # gira_ate_achar() 
+   
+
 
     ## quando ele chama o girar graus dentro do grie até achar ele da um erro estranho, tem q ver dps
     ## e acontece coisas parecidas no gap
@@ -483,7 +235,7 @@ while run == True:
 
     # print(erro(), p, d, "         ", todos_linha())
     
-    vb = 67
+    vb = 75
     valor = p + d
 
     motor_a_esquerdo.dc(vb - valor)
