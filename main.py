@@ -185,8 +185,6 @@ def parar(run):
     if parar >= 2:
         run = False
 
-   
-
 def jinglebell():
     ev3.speaker.play_notes(["D4/4", "D4/4", "D4/2", "Db4/4", "Db4/4", "Db4/2", "B3/4", "Db4/4", "B3/2", "F#3/3"], 238)
 
@@ -201,17 +199,21 @@ relogio.carrega()
 kp = 1.65 #1
 kd = 1.3 # 0.5
 erro_anterior = 0
-run = True
+run = False
 
 # bobo.straight(300)
 # beep(100,100)
 # pararMotores()
 
+def girargraus2(gr, direc):
+    graus = gr * 3.411111111111111
 
+    if direc = "esq":
+        bobo.turn(graus)
+    if direc = "dir":
+        bobo.turn(graus)
 
-def girar90():   
-    
-    bobo.turn(312)
+girargraus2(45, "esq")
 
 # girargraus(75, "esq")
 
@@ -223,7 +225,16 @@ while run == True:
     # if e_gap() == True:
     #     gap()
 
-   
+    if sensoresDir() > branco and sensoresEs() < preto:
+        beep
+
+        motor_a_esquerdo.dc(20)
+        motor_b_direito.dc(20)
+        wait(100)
+
+        pararMotores()
+        bobo.turn(90)
+
 
 
     ## quando ele chama o girar graus dentro do grie até achar ele da um erro estranho, tem q ver dps
