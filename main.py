@@ -23,8 +23,9 @@ motor_a_esquerdo = Motor(Port.A, Direction.COUNTERCLOCKWISE) #antihorario
 motor_b_direito = Motor(Port.B, Direction.CLOCKWISE) #horario
 
 bobo = DriveBase(motor_a_esquerdo, motor_b_direito, 48, 116)
+bobo.settings(300, 1000, 400, 1000)
 
-branco = 78
+branco = 70
 preto = 36
 
 #relacionado aos sensores
@@ -133,8 +134,10 @@ def pararMotores():
 
     beep(100,100)
 
-    motor_a_esquerdo.stop
-    motor_b_direito.stop
+    bobo.stop()
+    motor_a_esquerdo.stop()
+    motor_b_direito.stop()
+
 
 ##giroscopio
 
@@ -147,7 +150,7 @@ def erro():
     erro = (CorEsquerdaEXvendra() + CorEsquerdaVendra()) - (CorDireitaVendra() + CorDireitaEXvendra())
     return erro
 
-def girargraus(graus, direcao):
+def girargraus_errado(graus, direcao):
 
     if direcao == "esq":
 
@@ -168,6 +171,21 @@ def girargraus(graus, direcao):
 
             motor_a_esquerdo.dc(-70)
             motor_b_direito.dc(70)
+
+def girargraus(gr, direc):
+    pararMotores()
+    graus = gr * 3.4
+
+    if direc == "esq":
+        bobo.turn(graus)
+    if direc == "dir":
+        bobo.turn(graus)
+    pararMotores()
+
+def reto(mm):
+    pararMotores()
+    bobo.straight(mm * 2)
+    pararMotores()
 
 def parar(run):
 
@@ -199,25 +217,20 @@ relogio.carrega()
 kp = 1.65 #1
 kd = 1.3 # 0.5
 erro_anterior = 0
-run = False
 
 # bobo.straight(300)
 # beep(100,100)
 # pararMotores()
 
-def girargraus2(gr, direc):
-    graus = gr * 3.411111111111111
+beep()
 
-    if direc = "esq":
-        bobo.turn(graus)
-    if direc = "dir":
-        bobo.turn(graus)
+reto(70)
 
-girargraus2(45, "esq")
 
-# girargraus(75, "esq")
+girargraus(90,"dir")
 
-while run == True:
+run = 2
+while run == 1:
     relogio.reseta()
 
     print(todos_linha())
@@ -226,14 +239,21 @@ while run == True:
     #     gap()
 
     if sensoresDir() > branco and sensoresEs() < preto:
-        beep
+        beep()
 
-        motor_a_esquerdo.dc(20)
-        motor_b_direito.dc(20)
-        wait(100)
+        reto(50)
 
-        pararMotores()
-        bobo.turn(90)
+        while tudobranco() == True:
+            girargraus(10,"esq")
+
+
+    if sensoresEs() > branco and sensoresDir() < preto:
+        beep()
+
+        reto(50)
+
+        while tudobranco() == True:
+            girargraus(10,"dir")
 
 
 
