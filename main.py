@@ -13,7 +13,7 @@ import time
 
 ev3 = EV3Brick()
 
-sensorLinha = LUMPDevice(Port.S3)
+sensorLinha = LUMPDevice(Port.S4)
 valoresSensorLinha = sensorLinha.read(2)
 
 
@@ -28,7 +28,9 @@ branco = 78
 preto = 36
 
 #relacionado aos sensores
+
 #region
+
 ## VALORES HSV
 def sensoresdecor():
     return sensorLinha.read(2)[20], sensorLinha.read(2)[21], sensorLinha.read(2)[22], sensorLinha.read(2)[23], sensorLinha.read(2)[24], sensorLinha.read(2)[25], sensorLinha.read(2)[26], sensorLinha.read(2)[27], sensorLinha.read(2)[28]
@@ -47,9 +49,6 @@ def sensoresdecor2():
 
 
 # SENSORES DE SEGUIR LINHA
-# cor do sensor da esquerda do meio
-def CorEsquerdaVendra():
-    return sensorLinha.read(2)[1]
 
 #checa se está vendo vermelho
 def checarcor(sensor):
@@ -80,6 +79,10 @@ def checarcor(sensor):
 
     else:
         return "erro"
+
+# cor do sensor da esquerda do meio
+def CorEsquerdaVendra():
+    return sensorLinha.read(2)[1]
 
 # cor do sensor da esquerda extrema
 def CorEsquerdaEXvendra():
@@ -149,21 +152,17 @@ def pd(): ##não ta sendo utilizado
 def checar_90():
 
     if sensoresEs() > branco and sensoresDir() < preto:
-
-        wait(300)
-
-        if sensoresEs() > branco and sensoresDir() < preto:
-            print("noventa dir")
-            
-            return "dir"
+           
+        print("noventa dir")
+        
+        return "dir"
 
     elif sensoresDir() > branco and sensoresEs() < preto:
-        wait(300)
+        
+        print("noventa esq")
+        # print(CorEsquerdaEXvendra(), CorEsquerdaVendra(), CorDireitaVendra(), CorDireitaEXvendra())
+        return "esq"
 
-        if sensoresEs() > branco and sensoresDir() < preto:
-            print("noventa esq")
-            # print(CorEsquerdaEXvendra(), CorEsquerdaVendra(), CorDireitaVendra(), CorDireitaEXvendra())
-            return "esq"
     else:
         False
 
@@ -188,7 +187,6 @@ def girargraus(graus, direcao):
 
             motor_a_esquerdo.dc(-70)
             motor_b_direito.dc(70)
-    
 
 def NoventaDir():
     atual = giro()
@@ -255,11 +253,12 @@ def noventa_semverde():
     if checar_90() == "dir": 
 
         ev3.speaker.beep(600,200)
+        print(todos_linha())
 
         motor_a_esquerdo.dc(50)
         motor_b_direito.dc(50)
 
-        wait(250)
+        wait(100)
 
         if tudobranco() == True:
             
@@ -295,10 +294,13 @@ def noventa_semverde():
             
     if checar_90() == "esq":
 
+        ev3.speaker.beep(300,100)
+        print(todos_linha())
+
         motor_a_esquerdo.dc(50)
         motor_b_direito.dc(50)
 
-        wait(250)
+        wait(100)
 
         if tudobranco() == True:
 
@@ -389,7 +391,7 @@ def noventaverde():
         bobo.straight(100)
         bobo.stop()
 
-        motor_a_esquerdos.run(-720)
+        motor_a_esquerdo.run(-720)
         motor_b_direito.run(720)
 
         atual = giro()
@@ -443,8 +445,8 @@ relogio = Cronometro("tempo")
 relogio.carrega()
 
 
-kp = 1 #1
-kd = 1 # 0.5
+kp = 1.5 #1
+kd = 0.8 # 0.5
 erro_anterior = 0
 run = True
 
@@ -458,16 +460,17 @@ def girar90():
     
     bobo.turn(312)
 
+# girargraus(75, "esq")
 
 while run == True:
     relogio.reseta()
 
-    # print(todos_linha())
+    print(todos_linha())
 
     # if e_gap() == True:
     #     gap()
 
-    # noventa_semverde()
+    noventa_semverde()
     # noventaverde()
     # gira_ate_achar() 
 
@@ -478,13 +481,13 @@ while run == True:
     p = erroo * kp 
     d = erroo - erro_anterior * kd
 
-    print(erro(), p, d, "   ", todos_linha())
+    # print(erro(), p, d, "         ", todos_linha())
     
-    vb = 60
+    vb = 67
     valor = p + d
 
-    motor_a_esquerdo.dc(vb + valor)
-    motor_b_direito.dc(vb - valor)
+    motor_a_esquerdo.dc(vb - valor)
+    motor_b_direito.dc(vb + valor)
 
     erro_anterior = erroo
 
@@ -496,6 +499,3 @@ while run == True:
 
 
 #COMENTA ESSA MERDA, tudo oque você faz tem que ser entendivel
-
-
-
