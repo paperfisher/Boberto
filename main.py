@@ -274,3 +274,9 @@ while run == 1:
 
 
 #COMENTA ESSA MERDA, tudo oque você faz tem que ser entendivel
+
+#antes de mecher com as funcoes tem q ajustar BEM o kp e kd
+
+#dps disso calibrar BEM as condicoes q ativam as funcoes, pra n ficar ativando em momentos errados
+#fica pedindo so pra beepar, e n fazer mais nada
+#dai dps comeca a trabalhar nas funcoes em si
