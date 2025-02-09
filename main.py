@@ -25,8 +25,8 @@ motor_b_direito = Motor(Port.B, Direction.CLOCKWISE) #horario
 bobo = DriveBase(motor_a_esquerdo, motor_b_direito, 48, 116)
 bobo.settings(300, 1000, 400, 1000)
 
-branco = 70
-preto = 36
+branco = 73
+preto = 20
 
 #relacionado aos sensores
 
@@ -177,7 +177,7 @@ def girargraus(gr, direc):
     graus = gr * 3.4
 
     if direc == "esq":
-        bobo.turn(graus)
+        bobo.turn(-graus)
     if direc == "dir":
         bobo.turn(graus)
     pararMotores()
@@ -214,22 +214,12 @@ relogio = Cronometro("tempo")
 relogio.carrega()
 
 
-kp = 1.65 #1
-kd = 1.3 # 0.5
+
+kp = 1.2 #1
+kd = 1.8 # 0.5
 erro_anterior = 0
 
-# bobo.straight(300)
-# beep(100,100)
-# pararMotores()
-
-beep()
-
-reto(70)
-
-
-girargraus(90,"dir")
-
-run = 2
+run = 1
 while run == 1:
     relogio.reseta()
 
@@ -238,22 +228,24 @@ while run == 1:
     # if e_gap() == True:
     #     gap()
 
-    if sensoresDir() > branco and sensoresEs() < preto:
-        beep()
+    # if sensoresDir() > branco and sensoresEs() < preto: 
+    #     print("esq") 
+    #     beep()
+    #     reto(70)
+    #     if tudobranco() == True:
+    #         while tudobranco() == True:
+    #             girargraus(30,"esq")
+    #         reto(-50)
 
-        reto(50)
 
-        while tudobranco() == True:
-            girargraus(10,"esq")
-
-
-    if sensoresEs() > branco and sensoresDir() < preto:
-        beep()
-
-        reto(50)
-
-        while tudobranco() == True:
-            girargraus(10,"dir")
+    # if sensoresEs() > branco and sensoresDir() < preto:
+    #     print("esq") 
+    #     beep()
+    #     reto(70)
+    #     if tudobranco() == True:
+    #         while tudobranco() == True:
+    #             girargraus(30,"dir")
+    #         reto(-50)
 
 
 
@@ -266,7 +258,7 @@ while run == 1:
 
     # print(erro(), p, d, "         ", todos_linha())
     
-    vb = 75
+    vb = 60
     valor = p + d
 
     motor_a_esquerdo.dc(vb - valor)
