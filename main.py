@@ -10,7 +10,7 @@ from pybricks.tools import wait
 from cronometro import Cronometro
 
 import time
-#TESTE
+
 ev3 = EV3Brick()
 
 sensorLinha = LUMPDevice(Port.S4)
@@ -18,14 +18,13 @@ valoresSensorLinha = sensorLinha.read(2)
 
 
 giroscopio = LUMPDevice(Port.S2)
-
 motor_a_esquerdo = Motor(Port.A, Direction.COUNTERCLOCKWISE) #antihorario
 motor_b_direito = Motor(Port.B, Direction.CLOCKWISE) #horario
 
 bobo = DriveBase(motor_a_esquerdo, motor_b_direito, 48, 116)
 bobo.settings(300, 1000, 400, 1000)
 
-branco = 73
+branco = 68 #73
 preto = 20
 
 #relacionado aos sensores
@@ -225,9 +224,6 @@ while run == 1:
 
     print(todos_linha())
 
-    # if e_gap() == True:
-    #     gap()
-
     # if sensoresDir() > branco and sensoresEs() < preto: 
     #     print("esq") 
     #     beep()
@@ -261,12 +257,12 @@ while run == 1:
     vb = 60
     valor = p + d
 
-    motor_a_esquerdo.dc(vb - valor)
-    motor_b_direito.dc(vb + valor)
+    motor_a_esquerdo.dc(vb + valor)
+    motor_b_direito.dc(vb - valor)
 
     erro_anterior = erroo
 
-    #     # parar(run)
+        # parar(run)
 
     while relogio.tempo() < 25:
 
